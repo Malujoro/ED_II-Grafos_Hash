@@ -152,7 +152,7 @@ void calcula_movimentos(NoHanoi *vetor_hanoi, int n_discos, NoHanoi **vertices, 
                     if(pos_existe == -1)
                     {
                         vertices[*tot_vertices]->vetor = copia;
-                        vertices[*tot_vertices]->lista = lista_cria();
+                        vertices[*tot_vertices]->lista = lista_criar();
                         lista_inserir(&vetor_hanoi->lista, *tot_vertices);
 
                         printf("[%d] - ", *tot_vertices);
@@ -223,7 +223,7 @@ int main()
 
     NoHanoi **matriz = alocar_matriz(total_vertices);
     matriz[0]->vetor = vetor;
-    matriz[0]->lista = lista_cria();
+    matriz[0]->lista = lista_criar();
 
     calcula_movimentos(matriz[0], n_discos, matriz, &n_vertices);
 
