@@ -5,50 +5,6 @@
 
 #define HASTES 3
 
-typedef struct noGrafo
-{
-    int info;
-    int peso;
-} NoGrafo;
-
-typedef struct noHanoi
-{
-    int *vetor;
-    Lista *lista;
-} NoHanoi;
-
-
-NoHanoi *alocar_no_hanoi(int tam)
-{
-    NoHanoi *vetor;
-    vetor = (NoHanoi *) malloc(sizeof(NoHanoi) * tam);
-
-    if(!vetor)
-    {
-        printf("Erro ao alocar vetor de Nós de Hanoi");
-        exit(EXIT_FAILURE);
-    }
-
-    return vetor;
-}
-
-NoHanoi **alocar_matriz(int tam)
-{
-    NoHanoi **matriz;
-    matriz = (NoHanoi **) malloc(sizeof(NoHanoi *) * tam);
-
-    if(!matriz)
-    {
-        printf("Erro ao alocar matriz de Nós de Hanoi");
-        exit(EXIT_FAILURE);
-    }
-
-    for(int i = 0; i < tam; i++)
-        matriz[i] = alocar_no_hanoi(1);
-
-    return matriz;
-}
-
 int *alocar_int(int tam)
 {
     int *vetor;
@@ -61,6 +17,23 @@ int *alocar_int(int tam)
     }
 
     return vetor;
+}
+
+int **alocar_matriz(int linhas, int colunas)
+{
+    int **matriz;
+    matriz = (int **) malloc(sizeof(int *) * linhas);
+
+    if(!matriz)
+    {
+        printf("Erro ao alocar matriz de int");
+        exit(EXIT_FAILURE);
+    }
+
+    for(int i = 0; i < colunas; i++)
+        matriz[i] = alocar_int(colunas);
+
+    return matriz;
 }
 
 int *copiar_vetor(int *vetor, int tam)
@@ -80,35 +53,48 @@ void exibir_vetor(int *vetor, int tam)
         printf("%d, ", vetor[i]);
 }
 
-void exibir_matriz(NoHanoi **matriz, int linhas, int colunas)
+void exibir_caminhos(int *vetor, int tam)
 {
-    for(int i = 0; i < linhas; i++)
+    for(int i = 0; i < tam; i++)
+    {
+        if(vetor[i])
+            printf("%d -> ", i);
+    }
+}
+
+void exibir_matriz(int **vertices, int **matriz, int n_vertices, int n_discos)
+{
+    for(int i = 0; i < n_vertices; i++)
     {
         printf("\n[%dª] Configuração: ", i);
-        exibir_vetor(matriz[i]->vetor, colunas);
+        exibir_vetor(vertices[i], n_discos);
         printf("Pode ir para: ");
-        lista_exibir(matriz[i]->lista);
+        exibir_caminhos(matriz[i], n_vertices);
         printf("\n");
     }
 }
 
-int vertice_existe(int *vetor, int tam, NoHanoi **vertices, int tot_vertices)
+int vetor_igual(int *vetor1, int *vetor2, int tam)
 {
-    int existe = -1, iguais;
+    int igual = 1;
 
-    for(int i = 0; i < tot_vertices && existe == -1; i++)
+    for(int j = 0; j < tam && igual; j++)
+        igual = vetor1[j] == vetor2[j];
+
+    return igual;
+}
+
+int vertice_posicao(int *vetor, int tam, int **vertices, int tot_vertices)
+{
+    int posicao = -1, iguais;
+
+    for(int i = 0; i < tot_vertices && posicao == -1; i++)
     {
-        iguais = 0;
-        for(int j = 0; j < tam; j++)
-        {
-            if(vertices[i]->vetor[j] == vetor[j])
-                iguais += 1;
-        }
-        if(iguais == tam)
-            existe = i;
+        if(vetor_igual(vertices[i], vetor, tam))
+            posicao = i;
     }
 
-    return existe;
+    return posicao;
 }
 
 int pode_mover(int *vetor, int tam, int disco, int *posicoes)
@@ -116,6 +102,8 @@ int pode_mover(int *vetor, int tam, int disco, int *posicoes)
     int pode = 1;
 
     posicoes[vetor[disco] - 1] = 0;
+    // Verifica se não há nenhum "disco menor" logo acima dele
+    // Caso não tenha, ele "cancela" a possibilidade de ir pra cima de um menor em outra haste
     for(int i = disco + 1; i < tam && pode; i++)
     {
         if(vetor[disco] == vetor[i])
@@ -127,48 +115,55 @@ int pode_mover(int *vetor, int tam, int disco, int *posicoes)
     return pode;
 }
 
-void calcula_movimentos(NoHanoi *vetor_hanoi, int n_discos, NoHanoi **vertices, int *tot_vertices)
+void calcula_movimentos(int *vetor_hanoi, int n_discos, int **vertices, int *tot_vertices, int ***matriz)
 {
-    int posicoes[] = {1, 1, 1};
+    int posicoes[HASTES];
+
+    for(int i = 0; i < HASTES; i++)
+        posicoes[i] = 1;
 
     printf("\n\nConfiguração [%d]: ", *tot_vertices);
-    exibir_vetor(vetor_hanoi->vetor, n_discos);
+    exibir_vetor(vetor_hanoi, n_discos);
     printf("\n");
     printf("\nPossibilidades:\n");
 
+    // Verifica todos os discos, começando do menor
+    int pos_atual = (*tot_vertices) - 1;
+
     for(int i = n_discos - 1; i >= 0; i--)
     {
-        if(pode_mover(vetor_hanoi->vetor, n_discos, i, posicoes))
+        // Caso possa mover, verifica se é um movimento "novo" e atribui essa possibilidade de movimento ao vértice atual
+        if(pode_mover(vetor_hanoi, n_discos, i, posicoes))
         {
             for(int j = 0; j < HASTES; j++)
             {
                 if(posicoes[j])
                 {
-                    int *copia = copiar_vetor(vetor_hanoi->vetor, n_discos);
+                    int *copia = copiar_vetor(vetor_hanoi, n_discos);
                     copia[i] = j + 1;
                     
-                    int pos_existe = vertice_existe(copia, n_discos, vertices, *tot_vertices);
+                    int pos_vertice = vertice_posicao(copia, n_discos, vertices, *tot_vertices);
 
-                    if(pos_existe == -1)
+                    if(pos_vertice == -1)
                     {
-                        vertices[*tot_vertices]->vetor = copia;
-                        vertices[*tot_vertices]->lista = lista_criar();
-                        lista_inserir(&vetor_hanoi->lista, *tot_vertices);
+                        vertices[*tot_vertices] = copia;
+                        (*matriz)[pos_atual][*tot_vertices] = 1;
 
                         printf("[%d] - ", *tot_vertices);
                         exibir_vetor(copia, n_discos);
 
                         (*tot_vertices)++;
 
-                        calcula_movimentos(vertices[(*tot_vertices) - 1], n_discos, vertices, tot_vertices);
+                        calcula_movimentos(vertices[(*tot_vertices) - 1], n_discos, vertices, tot_vertices, matriz);
+
                         printf("\nFinalizando Possibilidades do [");
-                        exibir_vetor(vetor_hanoi->vetor, n_discos);
+                        exibir_vetor(vetor_hanoi, n_discos);
                         printf("]\n");
                     }
                     else
                     {
-                        lista_inserir(&vetor_hanoi->lista, pos_existe);
-                        printf("[%d] - ", pos_existe);
+                        (*matriz)[pos_atual][pos_vertice] = 1;
+                        printf("[%d] - ", pos_vertice);
                         exibir_vetor(copia, n_discos);
 
                         printf("X");
@@ -180,34 +175,6 @@ void calcula_movimentos(NoHanoi *vetor_hanoi, int n_discos, NoHanoi **vertices, 
         }
     }
 }
-
-// void movimentos_possiveis(NoHanoi **vertices, int tot_vertices, int n_discos)
-// {
-//     int diferente;
-
-//     for(int i = 0; i < tot_vertices; i++)
-//     {
-//         for(int j = i + 1; j < tot_vertices - 1; j++)
-//         {
-//             int posicoes[] = {1, 1, 1};
-//             int pode = pode_mover(vertices[i]->vetor, n_discos, i, posicoes);
-
-//             diferente = 0;
-//             for(int k = 0; k < n_discos && diferente <= 1; k++)
-//             {
-//                 if(posicoes[k] && vertices[i]->vetor[k] != vertices[j]->vetor[k])
-//                     diferente++;
-//             }
-//             if(diferente <= 1)
-//             {
-//                 exibir_vetor(vertices[i]->vetor, n_discos);
-//                 printf(" -> ");
-//                 exibir_vetor(vertices[j]->vetor, n_discos);
-//                 printf("\n");
-//             }
-//         }
-//     }
-// }
 
 int main()
 {
@@ -221,15 +188,14 @@ int main()
     int total_vertices = pow(3, n_discos);
     int n_vertices = 1;
 
-    NoHanoi **matriz = alocar_matriz(total_vertices);
-    matriz[0]->vetor = vetor;
-    matriz[0]->lista = lista_criar();
+    int **vertices = alocar_matriz(total_vertices, 0);
+    vertices[0] = vetor;
 
-    calcula_movimentos(matriz[0], n_discos, matriz, &n_vertices);
+    int **matriz = alocar_matriz(total_vertices, total_vertices);
 
-    // movimentos_possiveis(matriz, n_vertices, n_discos);
+    calcula_movimentos(vertices[0], n_discos, vertices, &n_vertices, &matriz);
 
-    exibir_matriz(matriz, n_vertices, n_discos);
+    exibir_matriz(vertices, matriz, n_vertices, n_discos);
 
     return 0;
 }
