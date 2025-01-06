@@ -10,7 +10,8 @@
                 "${file}",
                 "-o",
                 "${fileDirname}/${fileBasenameNoExtension}",
-                "${fileDirname}/lista/lista.c",
+                "${fileDirname}/hanoi/hanoi.c",
+                "${fileDirname}/extras/extras.c",
                 "-lm"
             ],
             "options": {
