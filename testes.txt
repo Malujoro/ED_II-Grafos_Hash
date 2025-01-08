@@ -1,317 +1,317 @@
-Configuração: 1, 1, 1, 
+Configuração [1]: 1, 1, 1, 
 
 Possibilidades:
-1, 1, 2, 
+[1] - 1, 1, 2, 
 
-Configuração: 1, 1, 2, 
-
-Possibilidades:
-1, 1, 1, X
-1, 1, 3, 
-
-Configuração: 1, 1, 3, 
+Configuração [2]: 1, 1, 2, 
 
 Possibilidades:
-1, 1, 1, X
-1, 1, 2, X
-1, 2, 3, 
+[0] - 1, 1, 1, X
+[2] - 1, 1, 3, 
 
-Configuração: 1, 2, 3, 
-
-Possibilidades:
-1, 2, 1, 
-
-Configuração: 1, 2, 1, 
+Configuração [3]: 1, 1, 3, 
 
 Possibilidades:
-1, 2, 2, 
+[0] - 1, 1, 1, X
+[1] - 1, 1, 2, X
+[3] - 1, 2, 3, 
 
-Configuração: 1, 2, 2, 
-
-Possibilidades:
-1, 2, 1, X
-1, 2, 3, X
-3, 2, 2, 
-
-Configuração: 3, 2, 2, 
+Configuração [4]: 1, 2, 3, 
 
 Possibilidades:
-3, 2, 1, 
+[4] - 1, 2, 1, 
 
-Configuração: 3, 2, 1, 
-
-Possibilidades:
-3, 2, 2, X
-3, 2, 3, 
-
-Configuração: 3, 2, 3, 
+Configuração [5]: 1, 2, 1, 
 
 Possibilidades:
-3, 2, 1, X
-3, 2, 2, X
-3, 1, 3, 
+[5] - 1, 2, 2, 
 
-Configuração: 3, 1, 3, 
+Configuração [6]: 1, 2, 2, 
 
 Possibilidades:
-3, 1, 1, 
+[4] - 1, 2, 1, X
+[3] - 1, 2, 3, X
+[6] - 3, 2, 2, 
 
-Configuração: 3, 1, 1, 
-
-Possibilidades:
-3, 1, 2, 
-
-Configuração: 3, 1, 2, 
+Configuração [7]: 3, 2, 2, 
 
 Possibilidades:
-3, 1, 1, X
-3, 1, 3, X
-3, 3, 2, 
+[7] - 3, 2, 1, 
 
-Configuração: 3, 3, 2, 
+Configuração [8]: 3, 2, 1, 
 
 Possibilidades:
-3, 3, 1, 
+[6] - 3, 2, 2, X
+[8] - 3, 2, 3, 
 
-Configuração: 3, 3, 1, 
-
-Possibilidades:
-3, 3, 2, X
-3, 3, 3, 
-
-Configuração: 3, 3, 3, 
+Configuração [9]: 3, 2, 3, 
 
 Possibilidades:
-3, 3, 1, X
-3, 3, 2, X
+[7] - 3, 2, 1, X
+[6] - 3, 2, 2, X
+[9] - 3, 1, 3, 
+
+Configuração [10]: 3, 1, 3, 
+
+Possibilidades:
+[10] - 3, 1, 1, 
+
+Configuração [11]: 3, 1, 1, 
+
+Possibilidades:
+[11] - 3, 1, 2, 
+
+Configuração [12]: 3, 1, 2, 
+
+Possibilidades:
+[10] - 3, 1, 1, X
+[9] - 3, 1, 3, X
+[12] - 3, 3, 2, 
+
+Configuração [13]: 3, 3, 2, 
+
+Possibilidades:
+[13] - 3, 3, 1, 
+
+Configuração [14]: 3, 3, 1, 
+
+Possibilidades:
+[12] - 3, 3, 2, X
+[14] - 3, 3, 3, 
+
+Configuração [15]: 3, 3, 3, 
+
+Possibilidades:
+[13] - 3, 3, 1, X
+[12] - 3, 3, 2, X
 
 Finalizando Possibilidades do [3, 3, 1, ]
 
-3, 2, 1, X
+[7] - 3, 2, 1, X
 
 Finalizando Possibilidades do [3, 3, 2, ]
 
-3, 3, 3, X
-3, 1, 2, X
+[14] - 3, 3, 3, X
+[11] - 3, 1, 2, X
 
 Finalizando Possibilidades do [3, 1, 2, ]
 
 
 Finalizando Possibilidades do [3, 1, 1, ]
 
-3, 1, 3, X
-2, 1, 1, 
+[9] - 3, 1, 3, X
+[15] - 2, 1, 1, 
 
-Configuração: 2, 1, 1, 
-
-Possibilidades:
-2, 1, 2, 
-
-Configuração: 2, 1, 2, 
+Configuração [16]: 2, 1, 1, 
 
 Possibilidades:
-2, 1, 1, X
-2, 1, 3, 
+[16] - 2, 1, 2, 
 
-Configuração: 2, 1, 3, 
-
-Possibilidades:
-2, 1, 1, X
-2, 1, 2, X
-2, 2, 3, 
-
-Configuração: 2, 2, 3, 
+Configuração [17]: 2, 1, 2, 
 
 Possibilidades:
-2, 2, 1, 
+[15] - 2, 1, 1, X
+[17] - 2, 1, 3, 
 
-Configuração: 2, 2, 1, 
-
-Possibilidades:
-2, 2, 2, 
-
-Configuração: 2, 2, 2, 
+Configuração [18]: 2, 1, 3, 
 
 Possibilidades:
-2, 2, 1, X
-2, 2, 3, X
+[15] - 2, 1, 1, X
+[16] - 2, 1, 2, X
+[18] - 2, 2, 3, 
+
+Configuração [19]: 2, 2, 3, 
+
+Possibilidades:
+[19] - 2, 2, 1, 
+
+Configuração [20]: 2, 2, 1, 
+
+Possibilidades:
+[20] - 2, 2, 2, 
+
+Configuração [21]: 2, 2, 2, 
+
+Possibilidades:
+[19] - 2, 2, 1, X
+[18] - 2, 2, 3, X
 
 Finalizando Possibilidades do [2, 2, 1, ]
 
-2, 2, 3, X
-2, 3, 1, 
+[18] - 2, 2, 3, X
+[21] - 2, 3, 1, 
 
-Configuração: 2, 3, 1, 
-
-Possibilidades:
-2, 3, 2, 
-
-Configuração: 2, 3, 2, 
+Configuração [22]: 2, 3, 1, 
 
 Possibilidades:
-2, 3, 1, X
-2, 3, 3, 
+[22] - 2, 3, 2, 
 
-Configuração: 2, 3, 3, 
-
-Possibilidades:
-2, 3, 1, X
-2, 3, 2, X
-1, 3, 3, 
-
-Configuração: 1, 3, 3, 
+Configuração [23]: 2, 3, 2, 
 
 Possibilidades:
-1, 3, 1, 
+[21] - 2, 3, 1, X
+[23] - 2, 3, 3, 
 
-Configuração: 1, 3, 1, 
-
-Possibilidades:
-1, 3, 2, 
-
-Configuração: 1, 3, 2, 
+Configuração [24]: 2, 3, 3, 
 
 Possibilidades:
-1, 3, 1, X
-1, 3, 3, X
-1, 1, 2, X
+[21] - 2, 3, 1, X
+[22] - 2, 3, 2, X
+[24] - 1, 3, 3, 
+
+Configuração [25]: 1, 3, 3, 
+
+Possibilidades:
+[25] - 1, 3, 1, 
+
+Configuração [26]: 1, 3, 1, 
+
+Possibilidades:
+[26] - 1, 3, 2, 
+
+Configuração [27]: 1, 3, 2, 
+
+Possibilidades:
+[25] - 1, 3, 1, X
+[24] - 1, 3, 3, X
+[1] - 1, 1, 2, X
 
 Finalizando Possibilidades do [1, 3, 1, ]
 
-1, 3, 3, X
-1, 2, 1, X
+[24] - 1, 3, 3, X
+[4] - 1, 2, 1, X
 
 Finalizando Possibilidades do [1, 3, 3, ]
 
-1, 3, 2, X
-2, 3, 3, X
+[26] - 1, 3, 2, X
+[23] - 2, 3, 3, X
 
 Finalizando Possibilidades do [2, 3, 3, ]
 
 
 Finalizando Possibilidades do [2, 3, 2, ]
 
-2, 1, 2, X
+[16] - 2, 1, 2, X
 
 Finalizando Possibilidades do [2, 3, 1, ]
 
-2, 3, 3, X
-2, 2, 1, X
+[23] - 2, 3, 3, X
+[19] - 2, 2, 1, X
 
 Finalizando Possibilidades do [2, 2, 1, ]
 
 
 Finalizando Possibilidades do [2, 2, 3, ]
 
-2, 2, 2, X
-2, 1, 3, X
+[20] - 2, 2, 2, X
+[17] - 2, 1, 3, X
 
 Finalizando Possibilidades do [2, 1, 3, ]
 
 
 Finalizando Possibilidades do [2, 1, 2, ]
 
-2, 3, 2, X
+[22] - 2, 3, 2, X
 
 Finalizando Possibilidades do [2, 1, 1, ]
 
-2, 1, 3, X
-3, 1, 1, X
+[17] - 2, 1, 3, X
+[10] - 3, 1, 1, X
 
 Finalizando Possibilidades do [3, 1, 1, ]
 
 
 Finalizando Possibilidades do [3, 1, 3, ]
 
-3, 1, 2, X
-3, 2, 3, X
+[11] - 3, 1, 2, X
+[8] - 3, 2, 3, X
 
 Finalizando Possibilidades do [3, 2, 3, ]
 
 
 Finalizando Possibilidades do [3, 2, 1, ]
 
-3, 3, 1, X
+[13] - 3, 3, 1, X
 
 Finalizando Possibilidades do [3, 2, 2, ]
 
-3, 2, 3, X
-1, 2, 2, X
+[8] - 3, 2, 3, X
+[5] - 1, 2, 2, X
 
 Finalizando Possibilidades do [1, 2, 2, ]
 
 
 Finalizando Possibilidades do [1, 2, 1, ]
 
-1, 2, 3, X
-1, 3, 1, X
+[3] - 1, 2, 3, X
+[25] - 1, 3, 1, X
 
 Finalizando Possibilidades do [1, 2, 3, ]
 
-1, 2, 2, X
-1, 1, 3, X
+[5] - 1, 2, 2, X
+[2] - 1, 1, 3, X
 
 Finalizando Possibilidades do [1, 1, 3, ]
 
 
 Finalizando Possibilidades do [1, 1, 2, ]
 
-1, 3, 2, X
+[26] - 1, 3, 2, X
 
 Finalizando Possibilidades do [1, 1, 1, ]
 
-1, 1, 3, X
+[2] - 1, 1, 3, X
 
-[1ª] Configuração: 1, 1, 1, 
+[0ª] Configuração: 1, 1, 1, Pode ir para: 1 -> 2 -> 
 
-[2ª] Configuração: 1, 1, 2, 
+[1ª] Configuração: 1, 1, 2, Pode ir para: 0 -> 2 -> 26 -> 
 
-[3ª] Configuração: 1, 1, 3, 
+[2ª] Configuração: 1, 1, 3, Pode ir para: 0 -> 1 -> 3 -> 
 
-[4ª] Configuração: 1, 2, 3, 
+[3ª] Configuração: 1, 2, 3, Pode ir para: 2 -> 4 -> 5 -> 
 
-[5ª] Configuração: 1, 2, 1, 
+[4ª] Configuração: 1, 2, 1, Pode ir para: 3 -> 5 -> 25 -> 
 
-[6ª] Configuração: 1, 2, 2, 
+[5ª] Configuração: 1, 2, 2, Pode ir para: 3 -> 4 -> 6 -> 
 
-[7ª] Configuração: 3, 2, 2, 
+[6ª] Configuração: 3, 2, 2, Pode ir para: 5 -> 7 -> 8 -> 
 
-[8ª] Configuração: 3, 2, 1, 
+[7ª] Configuração: 3, 2, 1, Pode ir para: 6 -> 8 -> 13 -> 
 
-[9ª] Configuração: 3, 2, 3, 
+[8ª] Configuração: 3, 2, 3, Pode ir para: 6 -> 7 -> 9 -> 
 
-[10ª] Configuração: 3, 1, 3, 
+[9ª] Configuração: 3, 1, 3, Pode ir para: 8 -> 10 -> 11 -> 
 
-[11ª] Configuração: 3, 1, 1, 
+[10ª] Configuração: 3, 1, 1, Pode ir para: 9 -> 11 -> 15 -> 
 
-[12ª] Configuração: 3, 1, 2, 
+[11ª] Configuração: 3, 1, 2, Pode ir para: 9 -> 10 -> 12 -> 
 
-[13ª] Configuração: 3, 3, 2, 
+[12ª] Configuração: 3, 3, 2, Pode ir para: 11 -> 13 -> 14 -> 
 
-[14ª] Configuração: 3, 3, 1, 
+[13ª] Configuração: 3, 3, 1, Pode ir para: 7 -> 12 -> 14 -> 
 
-[15ª] Configuração: 3, 3, 3, 
+[14ª] Configuração: 3, 3, 3, Pode ir para: 12 -> 13 -> 
 
-[16ª] Configuração: 2, 1, 1, 
+[15ª] Configuração: 2, 1, 1, Pode ir para: 10 -> 16 -> 17 -> 
 
-[17ª] Configuração: 2, 1, 2, 
+[16ª] Configuração: 2, 1, 2, Pode ir para: 15 -> 17 -> 22 -> 
 
-[18ª] Configuração: 2, 1, 3, 
+[17ª] Configuração: 2, 1, 3, Pode ir para: 15 -> 16 -> 18 -> 
 
-[19ª] Configuração: 2, 2, 3, 
+[18ª] Configuração: 2, 2, 3, Pode ir para: 17 -> 19 -> 20 -> 
 
-[20ª] Configuração: 2, 2, 1, 
+[19ª] Configuração: 2, 2, 1, Pode ir para: 18 -> 20 -> 21 -> 
 
-[21ª] Configuração: 2, 2, 2, 
+[20ª] Configuração: 2, 2, 2, Pode ir para: 18 -> 19 -> 
 
-[22ª] Configuração: 2, 3, 1, 
+[21ª] Configuração: 2, 3, 1, Pode ir para: 19 -> 22 -> 23 -> 
 
-[23ª] Configuração: 2, 3, 2, 
+[22ª] Configuração: 2, 3, 2, Pode ir para: 16 -> 21 -> 23 -> 
 
-[24ª] Configuração: 2, 3, 3, 
+[23ª] Configuração: 2, 3, 3, Pode ir para: 21 -> 22 -> 24 -> 
 
-[25ª] Configuração: 1, 3, 3, 
+[24ª] Configuração: 1, 3, 3, Pode ir para: 23 -> 25 -> 26 -> 
 
-[26ª] Configuração: 1, 3, 1, 
+[25ª] Configuração: 1, 3, 1, Pode ir para: 4 -> 24 -> 26 -> 
 
-[27ª] Configuração: 1, 3, 2, 
+[26ª] Configuração: 1, 3, 2, Pode ir para: 1 -> 24 -> 25 -> 
