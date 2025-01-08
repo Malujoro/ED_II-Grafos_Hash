@@ -40,10 +40,13 @@ int pode_mover(int *vetor, int tam, int disco, int *posicoes)
 
 void calcula_movimentos(int *vetor_hanoi, int n_discos, int **vertices, int *tot_vertices, int **matriz)
 {
-    int posicoes[HASTES];
+    // int posicoes[HASTES];
 
-    for(int i = 0; i < HASTES; i++)
-        posicoes[i] = 1;
+    // for(int i = 0; i < HASTES; i++)
+    //     posicoes[i] = 1;
+
+    int *posicoes;
+    posicoes = inicializar_vetor(HASTES, 1);
 
     printf("\n\nConfiguração [%d]: ", *tot_vertices);
     exibir_vetor(vetor_hanoi, n_discos);
@@ -90,21 +93,24 @@ void calcula_movimentos(int *vetor_hanoi, int n_discos, int **vertices, int *tot
                         exibir_vetor(copia, n_discos);
 
                         printf("X");
-                        free(copia);
+                        liberar_vetor(&copia);
+                        // free(copia);
                     }
                     printf("\n");
                 }
             }
         }
     }
+    liberar_vetor(&posicoes);
 }
 
 int gerar_possibilidades(int n_discos, int ***vetor_vertices, int ***matriz_adj)
 {
     int *vetor;
-    vetor = alocar_int(n_discos);
-    for(int i = 0; i < n_discos; i++)
-        vetor[i] = 1;
+    // vetor = alocar_int(n_discos);
+    // for(int i = 0; i < n_discos; i++)
+    //     vetor[i] = 1;
+    vetor = inicializar_vetor(n_discos, 1);
 
     int total_vertices = pow(3, n_discos);
     int n_vertices = 1;

@@ -33,6 +33,31 @@ int **alocar_matriz(int linhas, int colunas)
     return matriz;
 }
 
+void liberar_vetor(int **vetor)
+{
+    free(*vetor);
+    *vetor = NULL;
+}
+
+void liberar_matriz(int ***matriz, int linhas)
+{
+    for(int i = 0; i < linhas; i++)
+        liberar_vetor(&((*matriz)[i]));
+    
+    *matriz = NULL;
+}
+
+int *inicializar_vetor(int tam, int num)
+{
+    int *vetor;
+    vetor = alocar_int(tam);
+
+    for(int i = 0; i < tam; i++)
+        vetor[i] = num;
+
+    return vetor;
+}
+
 int *copiar_vetor(int *vetor, int tam)
 {
     int *copia;
@@ -80,4 +105,3 @@ int vetor_igual(int *vetor1, int *vetor2, int tam)
 
     return igual;
 }
-
