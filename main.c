@@ -21,7 +21,7 @@ No *alocar_no(int tam)
 
     if(!vetor)
     {
-        printf("Erro ao alocar vetor de nós");
+        printf("Erro ao alocar vetor de nós Dijkstra");
         exit(EXIT_FAILURE);
     }
 
@@ -52,61 +52,126 @@ int buscar_menor_no(No *vetor_nos, int n_vertices)
     return pos_menor;
 }
 
-void exibir_djikstra(int pos_atual, No *vetor_nos)
+void exibir_caminho(int pos_atual, No *vetor_nos, int pos_inicial)
 {
     if(pos_atual != -1)
     {
-        exibir_djikstra(vetor_nos[pos_atual].indice, vetor_nos);
+        if(pos_atual != pos_inicial)
+            exibir_caminho(vetor_nos[pos_atual].indice, vetor_nos, pos_inicial);
+
         printf("[%d] -> ", pos_atual);
     }
 }
 
-void djikstra(int *inicial, int *final, int n_discos, int **vertices, int **matriz, int n_vertices)
+No *dijkstra(int *inicial, int *final, int n_discos, int **vertices, int **matriz, int n_vertices)
 {
-    int pos_inicial, pos_atual, pos_final;
+    int pos_inicial, pos_atual;
 
     pos_inicial = vertice_posicao(inicial, n_discos, vertices, n_vertices);
     pos_atual = pos_inicial;
-    pos_final = vertice_posicao(final, n_discos, vertices, n_vertices);
 
     No *vetor_nos;
-    vetor_nos = alocar_no(n_vertices);
+    vetor_nos = NULL;
 
-    while(pos_atual != pos_final && pos_atual != -1)
+    if(pos_atual != -1)
     {
-        vetor_nos[pos_atual].marcado = 1;
-        for(int i = 0; i < n_vertices; i++)
-        {
-            if(matriz[pos_atual][i])
-            {
-                int valor_aresta = vetor_nos[pos_atual].valor + matriz[pos_atual][i];
+        int pos_final = vertice_posicao(final, n_discos, vertices, n_vertices);
+        vetor_nos = alocar_no(n_vertices);
+        vetor_nos[pos_atual].indice = pos_atual;
+        vetor_nos[pos_atual].valor = 0;
 
-                if(!vetor_nos[i].marcado && valor_aresta < vetor_nos[i].valor)
+        while(pos_atual != pos_final && pos_atual != -1)
+        {
+            vetor_nos[pos_atual].marcado = 1;
+            for(int i = 0; i < n_vertices; i++)
+            {
+                if(matriz[pos_atual][i])
                 {
-                    vetor_nos[i].valor = valor_aresta;
-                    vetor_nos[i].indice = pos_atual;
+                    int valor_aresta = vetor_nos[pos_atual].valor + matriz[pos_atual][i];
+
+                    if(!vetor_nos[i].marcado && valor_aresta < vetor_nos[i].valor)
+                    {
+                        vetor_nos[i].valor = valor_aresta;
+                        vetor_nos[i].indice = pos_atual;
+                    }
                 }
             }
+            pos_atual = buscar_menor_no(vetor_nos, n_vertices);
         }
-        pos_atual = buscar_menor_no(vetor_nos, n_vertices);
     }
 
-    // printf("\n[%d] -> ", pos_inicial);
-
-    printf("\n");
-    exibir_djikstra(pos_atual, vetor_nos);
-    printf("\n");
-    // while(pos_atual != -1 && pos_atual != pos_inicial)
-    // {
-    //     printf("[%d] <- ", pos_atual);
-    //     pos_atual = vetor_nos[pos_atual].indice;
-    // }
-    // printf("[%d].\n", pos_final);
+    return vetor_nos;
 }
 
-void ford_moore_bellman()
+No *ford_moore_bellman(int *inicial, int *final, int n_discos, int **vertices, int **matriz, int n_vertices)
 {
+    int modificou;
 
+    int pos_inicial = vertice_posicao(inicial, n_discos, vertices, n_vertices);
+
+    No *vetor_nos;
+    vetor_nos = NULL;
+
+    if(pos_inicial != -1)
+    {
+        vetor_nos = alocar_no(n_vertices);
+        vetor_nos[pos_inicial].indice = pos_inicial;
+        vetor_nos[pos_inicial].valor = 0;
+
+        No *vetor_aux;
+        vetor_aux = alocar_no(n_vertices);
+
+        do
+        {
+            modificou = 0;
+            
+            for(int i = 0; i < n_vertices; i++)
+            {
+                if(i != pos_inicial)
+                {
+                    int achou_menor = 0;
+                    int pos_menor = -1;
+                    int valor_menor = INT_MAX;
+
+                    for(int j = 0; j < n_vertices; j++)
+                    {
+                        if(vetor_nos[j].indice != -1 && matriz[j][i] && (achou_menor == 0 || vetor_nos[j].valor < valor_menor))
+                        {
+                            pos_menor = j;
+                            valor_menor = matriz[j][i] + vetor_nos[j].valor;
+                            achou_menor = 1;
+                        }
+                    }
+
+                    if(achou_menor)
+                    {
+                        vetor_aux[i].indice = pos_menor;
+                        vetor_aux[i].valor = valor_menor;
+                        vetor_aux[i].marcado = 1;
+                        modificou = 1;
+                    }
+                }
+            }
+            if(modificou)
+            {
+                modificou = 0;
+                for(int i = 0; i < n_vertices; i++)
+                {
+                    if(vetor_aux[i].marcado)
+                    {
+                        if(vetor_nos[i].valor != vetor_aux[i].valor || vetor_nos[i].indice != vetor_aux[i].indice)
+                        {
+                            vetor_aux[i].marcado = 0;
+                            modificou = 1;
+                        }
+                        vetor_nos[i] = vetor_aux[i];
+                    }
+                }
+            }
+        } while(modificou);
+    }
+
+    return vetor_nos;
 }
 
 int main()
@@ -124,15 +189,42 @@ int main()
     final = inicializar_vetor(n_discos, 3);
     int pos_final = vertice_posicao(final, n_discos, vertices, n_vertices);
     
-    int teste[] = {2, 3, 1};
-    // djikstra(inicial, final, n_discos, vertices, matriz, n_vertices);
+    No *vetor_nos;
+    for(int i = 0; i < n_vertices; i++)
+    {
+        printf("\n[%d] até [%d]: ", i, pos_final);
+        vetor_nos = dijkstra(vertices[i], final, n_discos, vertices, matriz, n_vertices);
+
+        if(vetor_nos != NULL)
+        {
+            int pos_inicial = vertice_posicao(vertices[i], n_discos, vertices, n_vertices);
+            printf("\n");
+            exibir_caminho(pos_final, vetor_nos, pos_inicial);
+            printf("\n");
+
+            free(vetor_nos);
+            vetor_nos = NULL;
+        }
+    }
 
     for(int i = 0; i < n_vertices; i++)
     {
         printf("\n[%d] até [%d]: ", i, pos_final);
-        djikstra(vertices[i], final, n_discos, vertices, matriz, n_vertices);
+        vetor_nos = ford_moore_bellman(vertices[i], final, n_discos, vertices, matriz, n_vertices);
+
+        if(vetor_nos != NULL)
+        {
+            int pos_inicial = vertice_posicao(vertices[i], n_discos, vertices, n_vertices);
+            printf("\n");
+            exibir_caminho(pos_final, vetor_nos, pos_inicial);
+            printf("\n");
+
+            free(vetor_nos);
+            vetor_nos = NULL;
+        }
     }
 
-
+    printf("\n");
+    
     return 0;
 }

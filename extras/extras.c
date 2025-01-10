@@ -5,7 +5,7 @@
 int *alocar_int(int tam)
 {
     int *vetor;
-    vetor = (int *) malloc(sizeof(int) * tam);
+    vetor = (int *) calloc(sizeof(int), tam);
 
     if(!vetor)
     {
