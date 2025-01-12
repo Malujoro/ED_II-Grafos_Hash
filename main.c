@@ -52,13 +52,16 @@ int buscar_menor_no(No *vetor_nos, int n_vertices)
     return pos_menor;
 }
 
-void exibir_caminho(int pos_atual, No *vetor_nos, int pos_inicial)
+void exibir_caminho(int pos_atual, No *vetor_nos, int pos_inicial, int **vertices, int n_discos)
 {
     if(pos_atual != -1)
     {
         if(pos_atual != pos_inicial)
-            exibir_caminho(vetor_nos[pos_atual].indice, vetor_nos, pos_inicial);
+            exibir_caminho(vetor_nos[pos_atual].indice, vetor_nos, pos_inicial, vertices, n_discos);
 
+        // for(int i = 0; i < n_discos; i++)
+        //     printf("[%d], ", vertices[pos_atual][i]);
+        // printf("\n");
         printf("[%d] -> ", pos_atual);
     }
 }
@@ -105,7 +108,7 @@ No *dijkstra(int *inicial, int *final, int n_discos, int **vertices, int **matri
 
 No *ford_moore_bellman(int *inicial, int *final, int n_discos, int **vertices, int **matriz, int n_vertices)
 {
-    int modificou;
+    int modificou = 1;
 
     int pos_inicial = vertice_posicao(inicial, n_discos, vertices, n_vertices);
 
@@ -118,57 +121,25 @@ No *ford_moore_bellman(int *inicial, int *final, int n_discos, int **vertices, i
         vetor_nos[pos_inicial].indice = pos_inicial;
         vetor_nos[pos_inicial].valor = 0;
 
-        No *vetor_aux;
-        vetor_aux = alocar_no(n_vertices);
-
-        do
+        for(int it = 0; it < n_vertices - 1; it++)
         {
             modificou = 0;
-            
             for(int i = 0; i < n_vertices; i++)
             {
                 if(i != pos_inicial)
                 {
-                    int achou_menor = 0;
-                    int pos_menor = -1;
-                    int valor_menor = INT_MAX;
-
                     for(int j = 0; j < n_vertices; j++)
                     {
-                        if(vetor_nos[j].indice != -1 && matriz[j][i] && (achou_menor == 0 || vetor_nos[j].valor < valor_menor))
+                        if(vetor_nos[j].indice != -1 && matriz[j][i] && ((vetor_nos[j].valor + matriz[j][i]) < vetor_nos[i].valor))
                         {
-                            pos_menor = j;
-                            valor_menor = matriz[j][i] + vetor_nos[j].valor;
-                            achou_menor = 1;
-                        }
-                    }
-
-                    if(achou_menor)
-                    {
-                        vetor_aux[i].indice = pos_menor;
-                        vetor_aux[i].valor = valor_menor;
-                        vetor_aux[i].marcado = 1;
-                        modificou = 1;
-                    }
-                }
-            }
-            if(modificou)
-            {
-                modificou = 0;
-                for(int i = 0; i < n_vertices; i++)
-                {
-                    if(vetor_aux[i].marcado)
-                    {
-                        if(vetor_nos[i].valor != vetor_aux[i].valor || vetor_nos[i].indice != vetor_aux[i].indice)
-                        {
-                            vetor_aux[i].marcado = 0;
+                            vetor_nos[i].indice = j;
+                            vetor_nos[i].valor = matriz[j][i] + vetor_nos[j].valor;
                             modificou = 1;
                         }
-                        vetor_nos[i] = vetor_aux[i];
                     }
                 }
             }
-        } while(modificou);
+        }
     }
 
     return vetor_nos;
@@ -199,7 +170,7 @@ int main()
         {
             int pos_inicial = vertice_posicao(vertices[i], n_discos, vertices, n_vertices);
             printf("\n");
-            exibir_caminho(pos_final, vetor_nos, pos_inicial);
+            exibir_caminho(pos_final, vetor_nos, pos_inicial, vertices, n_discos);
             printf("\n");
 
             free(vetor_nos);
@@ -216,7 +187,7 @@ int main()
         {
             int pos_inicial = vertice_posicao(vertices[i], n_discos, vertices, n_vertices);
             printf("\n");
-            exibir_caminho(pos_final, vetor_nos, pos_inicial);
+            exibir_caminho(pos_final, vetor_nos, pos_inicial, vertices, n_discos);
             printf("\n");
 
             free(vetor_nos);
