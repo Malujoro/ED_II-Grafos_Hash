@@ -96,10 +96,6 @@ No *dijkstra(int pos_atual, int pos_final, int n_vertices, float matriz[][n_vert
                     }
                 }
             }
-            // for(int i = 0; i < n_vertices; i++)
-            //     printf("\n[%d] até [%d] com custo [%lf]", i, vetor_nos[i].indice, vetor_nos[i].valor);
-            // printf("\n");
-
             pos_atual = buscar_maior_no(vetor_nos, n_vertices);
         }
     }

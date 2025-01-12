@@ -156,47 +156,58 @@ int main()
 
     int n_vertices = gerar_possibilidades(n_discos, &vertices, &matriz);
 
-    exibir_matriz(vertices, matriz, n_vertices, n_discos);
+    int *inicial, *final, pos_inicial;
+    inicial =  alocar_int(n_discos);
 
-    int *inicial, *final;
-    inicial =  inicializar_vetor(n_discos, 1);
+    do
+    {
+        for(int i = 0; i < n_discos; i++)
+        {
+            printf("%c: ", 'A' + i);
+            scanf(" %d", &inicial[i]);
+            while(getchar() != '\n');
+
+            if(inicial[i] < 1 || inicial[i] > HASTES)
+            {
+                printf("\nInsira um número de 1 a %d\n\n", HASTES);
+                i--;
+            }
+        }
+        pos_inicial = vertice_posicao(inicial, n_discos, vertices, n_vertices);
+        if(pos_inicial == -1)
+            printf("\nConfiguração inválida\n");
+    } while(pos_inicial == -1);
+    
     final = inicializar_vetor(n_discos, 3);
     int pos_final = vertice_posicao(final, n_discos, vertices, n_vertices);
     
+    printf("\n[%d] até [%d]: ", pos_inicial, pos_final);
+
     No *vetor_nos;
-    for(int i = 0; i < n_vertices; i++)
+
+    vetor_nos = dijkstra(inicial, final, n_discos, vertices, matriz, n_vertices);
+
+    if(vetor_nos != NULL)
     {
-        printf("\n[%d] até [%d]: ", i, pos_final);
-        vetor_nos = dijkstra(vertices[i], final, n_discos, vertices, matriz, n_vertices);
+        int pos_inicial = vertice_posicao(inicial, n_discos, vertices, n_vertices);
+        printf("\n");
+        exibir_caminho(pos_final, vetor_nos, pos_inicial, vertices, n_discos);
+        printf("\n");
 
-        if(vetor_nos != NULL)
-        {
-            int pos_inicial = vertice_posicao(vertices[i], n_discos, vertices, n_vertices);
-            printf("\n");
-            exibir_caminho(pos_final, vetor_nos, pos_inicial, vertices, n_discos);
-            printf("\n");
-
-            free(vetor_nos);
-            vetor_nos = NULL;
-        }
+        free(vetor_nos);
+        vetor_nos = NULL;
     }
 
-    for(int i = 0; i < n_vertices; i++)
+    vetor_nos = ford_moore_bellman(inicial, n_discos, vertices, matriz, n_vertices);
+
+    if(vetor_nos != NULL)
     {
-        printf("\n[%d] até [%d]: ", i, pos_final);
-        vetor_nos = ford_moore_bellman(vertices[i], n_discos, vertices, matriz, n_vertices);
-
-        if(vetor_nos != NULL)
-        {
-            int pos_inicial = vertice_posicao(vertices[i], n_discos, vertices, n_vertices);
-            printf("\n");
-            exibir_caminho(pos_final, vetor_nos, pos_inicial, vertices, n_discos);
-            printf("\n");
-
-            free(vetor_nos);
-            vetor_nos = NULL;
-        }
+        free(vetor_nos);
+        vetor_nos = NULL;
     }
+
+    free(inicial);
+    free(final);
 
     printf("\n");
     

@@ -230,7 +230,6 @@ int main()
             {
                 colisoes = 0;
                 vetor = (funcao_hash[i])(tam[j], quant, &colisoes, &media);
-                // exibir_funcionarios(vetor, tam[j]);
                 vetor = desalocar(vetor, tam[j]);
                 media2 += media;
             }

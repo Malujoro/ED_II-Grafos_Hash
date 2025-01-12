@@ -43,11 +43,6 @@ void calcula_movimentos(int *vetor_hanoi, int n_discos, int **vertices, int *tot
     int *posicoes;
     posicoes = inicializar_vetor(HASTES, 1);
 
-    printf("\n\nConfiguração [%d]: ", *tot_vertices);
-    exibir_vetor(vetor_hanoi, n_discos);
-    printf("\n");
-    printf("\nPossibilidades:\n");
-
     // Verifica todos os discos, começando do menor
     int pos_atual = (*tot_vertices) - 1;
 
@@ -70,27 +65,15 @@ void calcula_movimentos(int *vetor_hanoi, int n_discos, int **vertices, int *tot
                         vertices[*tot_vertices] = copia;
                         matriz[pos_atual][*tot_vertices] = 1;
 
-                        printf("[%d] - ", *tot_vertices);
-                        exibir_vetor(copia, n_discos);
-
                         (*tot_vertices)++;
 
                         calcula_movimentos(vertices[(*tot_vertices) - 1], n_discos, vertices, tot_vertices, matriz);
-
-                        printf("\nFinalizando Possibilidades do [");
-                        exibir_vetor(vetor_hanoi, n_discos);
-                        printf("]\n");
                     }
                     else
                     {
                         matriz[pos_atual][pos_vertice] = 1;
-                        printf("[%d] - ", pos_vertice);
-                        exibir_vetor(copia, n_discos);
-
-                        printf("X");
                         liberar_vetor(&copia);
                     }
-                    printf("\n");
                 }
             }
         }
