@@ -3,10 +3,19 @@
 #include "hanoi/hanoi.h"
 #include "extras/extras.h"
 #include <limits.h>
+#include <time.h>
 
 #define HASTES 3
 #define INFINITO INT_MAX
 #define INVALIDO -1
+
+typedef double tempo_tipo;
+
+tempo_tipo calcula_tempo(clock_t inicio, clock_t fim)
+{
+    return ((tempo_tipo) (fim - inicio)) / CLOCKS_PER_SEC * 1000 * 1000;
+}
+
 
 typedef struct no
 {
@@ -148,16 +157,9 @@ No *ford_moore_bellman(int *inicial, int n_discos, int **vertices, int **matriz,
     return vetor_nos;
 }
 
-int main()
+int cadastrar_configuracao(int n_discos, int *inicial, int **vertices, int n_vertices)
 {
-    int n_discos = 3;
-
-    int **vertices, **matriz;
-
-    int n_vertices = gerar_possibilidades(n_discos, &vertices, &matriz);
-
-    int *inicial, *final, pos_inicial;
-    inicial =  alocar_int(n_discos);
+    int pos_inicial;
 
     do
     {
@@ -177,6 +179,22 @@ int main()
         if(pos_inicial == -1)
             printf("\nConfiguração inválida\n");
     } while(pos_inicial == -1);
+
+    return pos_inicial;
+}
+
+int main()
+{
+    int n_discos = 3;
+
+    int **vertices, **matriz;
+
+    int n_vertices = gerar_possibilidades(n_discos, &vertices, &matriz);
+
+    int *inicial, *final;
+    inicial =  alocar_int(n_discos);
+
+    int pos_inicial = cadastrar_configuracao(n_discos, inicial, vertices, n_vertices);
     
     final = inicializar_vetor(n_discos, 3);
     int pos_final = vertice_posicao(final, n_discos, vertices, n_vertices);
@@ -185,7 +203,14 @@ int main()
 
     No *vetor_nos;
 
+    clock_t inicio, fim;
+    tempo_tipo tempo_gasto[2];
+
+    inicio = clock();
     vetor_nos = dijkstra(inicial, final, n_discos, vertices, matriz, n_vertices);
+    fim = clock();
+    
+    tempo_gasto[0] = calcula_tempo(inicio, fim);
 
     if(vetor_nos != NULL)
     {
@@ -198,7 +223,11 @@ int main()
         vetor_nos = NULL;
     }
 
+    inicio = clock();
     vetor_nos = ford_moore_bellman(inicial, n_discos, vertices, matriz, n_vertices);
+    fim = clock();
+
+    tempo_gasto[1] = calcula_tempo(inicio, fim);
 
     if(vetor_nos != NULL)
     {
@@ -208,6 +237,11 @@ int main()
 
     free(inicial);
     free(final);
+
+    char nomes[2][50] = {"Dijkstra", "Ford-Moore-Bellman"};
+
+    for(int i = 0; i < 2; i++)
+        printf("\n[%s - %lf microssegundos]\n", nomes[i], tempo_gasto[i]);
 
     printf("\n");
     
