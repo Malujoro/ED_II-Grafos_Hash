@@ -52,41 +52,55 @@ int exibir_caminho(int pos_atual, No *vetor_nos, int pos_inicial)
     return retorno;
 }
 
-No *ford_moore_bellman(int pos_inicial, int n_vertices, float matriz[][n_vertices])
+int buscar_maior_no(No *vetor_nos, int n_vertices)
 {
-    int modificou = 1;
+    float maior = INFINITO;
+    int pos_maior = INVALIDO;
 
+    for(int i = 0; i < n_vertices; i++)
+    {
+        if(!vetor_nos[i].marcado && vetor_nos[i].valor > maior)
+        {
+            maior = vetor_nos[i].valor;
+            pos_maior = i;
+        }
+    }
+
+    return pos_maior;
+}
+
+No *dijkstra(int pos_atual, int pos_final, int n_vertices, float matriz[][n_vertices])
+{
     No *vetor_nos;
     vetor_nos = NULL;
 
-    if(pos_inicial != INVALIDO)
+    if(pos_atual != INVALIDO)
     {
         vetor_nos = alocar_no(n_vertices);
-        vetor_nos[pos_inicial].indice = pos_inicial;
-        vetor_nos[pos_inicial].valor = 1;
+        vetor_nos[pos_atual].indice = pos_atual;
+        vetor_nos[pos_atual].valor = 1;
 
-        for(int it = 0; it < n_vertices - 1 && modificou; it++)
+        for(int it = 0; it < n_vertices && !vetor_nos[pos_final].marcado && pos_atual != INVALIDO; it++)
         {
-            // for(int i = 0; i < n_vertices; i++)
-            //     printf("\n[%d] até [%d] com custo [%lf]", i, vetor_nos[i].indice, vetor_nos[i].valor);
-            // printf("\n");
-            modificou = 0;
+            vetor_nos[pos_atual].marcado = 1;
             for(int i = 0; i < n_vertices; i++)
             {
-                if(i != pos_inicial)
+                if(matriz[pos_atual][i])
                 {
-                    for(int j = 0; j < n_vertices; j++)
+                    float valor_aresta = vetor_nos[pos_atual].valor * matriz[pos_atual][i];
+
+                    if(!vetor_nos[i].marcado && valor_aresta > vetor_nos[i].valor)
                     {
-                        float valor_aresta = vetor_nos[j].valor * matriz[j][i];
-                        if(vetor_nos[j].indice != INVALIDO && matriz[j][i] != 0 && (valor_aresta > vetor_nos[i].valor))
-                        {
-                            vetor_nos[i].indice = j;
-                            vetor_nos[i].valor = valor_aresta;
-                            modificou = 1;
-                        }
+                        vetor_nos[i].valor = valor_aresta;
+                        vetor_nos[i].indice = pos_atual;
                     }
                 }
             }
+            // for(int i = 0; i < n_vertices; i++)
+            //     printf("\n[%d] até [%d] com custo [%lf]", i, vetor_nos[i].indice, vetor_nos[i].valor);
+            // printf("\n");
+
+            pos_atual = buscar_maior_no(vetor_nos, n_vertices);
         }
     }
 
@@ -123,10 +137,10 @@ int main()
     No *vetor_nos;
     for(int i = 0; i < n_vertices; i++)
     {
-        for(int j = 0; j < n_vertices; j++)
+        for(int j = n_vertices - 1; j < n_vertices; j++)
         {
             printf("\n[%d] até [%d]: ", i, j);
-            vetor_nos = ford_moore_bellman(i, n_vertices, matriz);
+            vetor_nos = dijkstra(i, j, n_vertices, matriz);
 
             if(vetor_nos != NULL)
             {
