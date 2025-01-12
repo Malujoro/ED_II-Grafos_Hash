@@ -121,7 +121,7 @@ No *ford_moore_bellman(int *inicial, int *final, int n_discos, int **vertices, i
         vetor_nos[pos_inicial].indice = pos_inicial;
         vetor_nos[pos_inicial].valor = 0;
 
-        for(int it = 0; it < n_vertices - 1; it++)
+        for(int it = 0; it < n_vertices - 1 && modificou; it++)
         {
             modificou = 0;
             for(int i = 0; i < n_vertices; i++)
