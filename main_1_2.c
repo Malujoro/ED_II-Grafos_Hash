@@ -70,10 +70,10 @@ void exibir_caminho(int pos_atual, No *vetor_nos, int pos_inicial, int **vertice
         if(pos_atual != pos_inicial)
             exibir_caminho(vetor_nos[pos_atual].indice, vetor_nos, pos_inicial, vertices, n_discos);
 
-        // for(int i = 0; i < n_discos; i++)
-        //     printf("[%d], ", vertices[pos_atual][i]);
-        // printf("\n");
-        printf("[%d] -> ", pos_atual);
+        for(int i = 0; i < n_discos; i++)
+            printf("[%d], ", vertices[pos_atual][i]);
+        printf("\n");
+        // printf("[%d] -> ", pos_atual);
     }
 }
 
@@ -185,7 +185,7 @@ int cadastrar_configuracao(int n_discos, int *inicial, int **vertices, int n_ver
 
 int main()
 {
-    int n_discos = 3;
+    int n_discos = 4;
 
     int **vertices, **matriz;
 
@@ -199,8 +199,6 @@ int main()
     final = inicializar_vetor(n_discos, 3);
     int pos_final = vertice_posicao(final, n_discos, vertices, n_vertices);
     
-    printf("\n[%d] até [%d]: ", pos_inicial, pos_final);
-
     No *vetor_nos;
 
     clock_t inicio, fim;
