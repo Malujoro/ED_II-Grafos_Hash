@@ -5,6 +5,8 @@
 #include <limits.h>
 
 #define HASTES 3
+#define INFINITO INT_MAX
+#define INVALIDO -1
 
 typedef struct no
 {
@@ -27,8 +29,8 @@ No *alocar_no(int tam)
 
     for(int i = 0; i < tam; i++)
     {
-        vetor[i].indice = -1;
-        vetor[i].valor = INT_MAX;
+        vetor[i].indice = INVALIDO;
+        vetor[i].valor = INFINITO;
         vetor[i].marcado = 0;
     }
 
@@ -37,8 +39,8 @@ No *alocar_no(int tam)
 
 int buscar_menor_no(No *vetor_nos, int n_vertices)
 {
-    int menor = INT_MAX;
-    int pos_menor = -1;
+    int menor = INFINITO;
+    int pos_menor = INVALIDO;
 
     for(int i = 0; i < n_vertices; i++)
     {
@@ -54,7 +56,7 @@ int buscar_menor_no(No *vetor_nos, int n_vertices)
 
 void exibir_caminho(int pos_atual, No *vetor_nos, int pos_inicial, int **vertices, int n_discos)
 {
-    if(pos_atual != -1)
+    if(pos_atual != INVALIDO)
     {
         if(pos_atual != pos_inicial)
             exibir_caminho(vetor_nos[pos_atual].indice, vetor_nos, pos_inicial, vertices, n_discos);
@@ -76,14 +78,14 @@ No *dijkstra(int *inicial, int *final, int n_discos, int **vertices, int **matri
     No *vetor_nos;
     vetor_nos = NULL;
 
-    if(pos_atual != -1)
+    if(pos_atual != INVALIDO)
     {
         int pos_final = vertice_posicao(final, n_discos, vertices, n_vertices);
         vetor_nos = alocar_no(n_vertices);
         vetor_nos[pos_atual].indice = pos_atual;
         vetor_nos[pos_atual].valor = 0;
 
-        while(pos_atual != pos_final && pos_atual != -1)
+        for(int it = 0; it < n_vertices && pos_atual != pos_final && pos_atual != INVALIDO; it++)
         {
             vetor_nos[pos_atual].marcado = 1;
             for(int i = 0; i < n_vertices; i++)
@@ -106,7 +108,7 @@ No *dijkstra(int *inicial, int *final, int n_discos, int **vertices, int **matri
     return vetor_nos;
 }
 
-No *ford_moore_bellman(int *inicial, int *final, int n_discos, int **vertices, int **matriz, int n_vertices)
+No *ford_moore_bellman(int *inicial, int n_discos, int **vertices, int **matriz, int n_vertices)
 {
     int modificou = 1;
 
@@ -115,7 +117,7 @@ No *ford_moore_bellman(int *inicial, int *final, int n_discos, int **vertices, i
     No *vetor_nos;
     vetor_nos = NULL;
 
-    if(pos_inicial != -1)
+    if(pos_inicial != INVALIDO)
     {
         vetor_nos = alocar_no(n_vertices);
         vetor_nos[pos_inicial].indice = pos_inicial;
@@ -130,10 +132,11 @@ No *ford_moore_bellman(int *inicial, int *final, int n_discos, int **vertices, i
                 {
                     for(int j = 0; j < n_vertices; j++)
                     {
-                        if(vetor_nos[j].indice != -1 && matriz[j][i] && ((vetor_nos[j].valor + matriz[j][i]) < vetor_nos[i].valor))
+                        int valor_aresta = vetor_nos[j].valor + matriz[j][i];
+                        if(vetor_nos[j].indice != INVALIDO && matriz[j][i] && (valor_aresta < vetor_nos[i].valor))
                         {
                             vetor_nos[i].indice = j;
-                            vetor_nos[i].valor = matriz[j][i] + vetor_nos[j].valor;
+                            vetor_nos[i].valor = valor_aresta;
                             modificou = 1;
                         }
                     }
@@ -181,7 +184,7 @@ int main()
     for(int i = 0; i < n_vertices; i++)
     {
         printf("\n[%d] até [%d]: ", i, pos_final);
-        vetor_nos = ford_moore_bellman(vertices[i], final, n_discos, vertices, matriz, n_vertices);
+        vetor_nos = ford_moore_bellman(vertices[i], n_discos, vertices, matriz, n_vertices);
 
         if(vetor_nos != NULL)
         {
