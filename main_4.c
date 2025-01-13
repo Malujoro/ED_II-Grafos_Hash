@@ -123,7 +123,6 @@ int hash_rotacao(char *matricula, int tam_vet)
 {
     char mat_rotacionada[7];
     rotacao_dois_digitos(matricula, mat_rotacionada);
-
     int digito2 = str_to_int(mat_rotacionada[1]) * 100;
     int digito4 = str_to_int(mat_rotacionada[3]) * 10;
     int digito6 = str_to_int(mat_rotacionada[5]);

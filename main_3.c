@@ -105,8 +105,14 @@ No *dijkstra(int pos_atual, int pos_final, int n_vertices, float matriz[][n_vert
 
 int main()
 {
-    int n_vertices = 7;
+    int posicoes[][2] = {{0, 1}, {0, 2}, {1, 3}, {1, 4}, {1, 5},
+                         {2, 3}, {2, 4}, {2, 5}, {3, 6}, {4, 6}, {5, 6}};
+                        
+    float valores[] = {0.3, 0.5, 0.9, 0.4, 0.7,
+                     0.1, 0.3, 0.4, 0.9, 0.2, 0.5};
 
+    int n_vertices = 7;
+    
     float matriz[n_vertices][n_vertices];
 
     for(int i = 0; i < n_vertices; i++)
@@ -115,20 +121,12 @@ int main()
             matriz[i][j] = 0;
     }
 
-    matriz[0][1] = 0.3;
-    matriz[0][2] = 0.5;
 
-    matriz[1][3] = 0.9;
-    matriz[1][4] = 0.4;
-    matriz[1][5] = 0.7;
+    int n_arestas = sizeof(valores) / sizeof(int);
 
-    matriz[2][3] = 0.1;
-    matriz[2][4] = 0.3;
-    matriz[2][5] = 0.4;
 
-    matriz[3][6] = 0.9;
-    matriz[4][6] = 0.2;
-    matriz[5][6] = 0.5;
+    for(int i = 0; i < n_arestas; i++)
+        matriz[posicoes[i][0]][posicoes[i][1]] = valores[i];
 
     No *vetor_nos;
     for(int i = 0; i < n_vertices; i++)
